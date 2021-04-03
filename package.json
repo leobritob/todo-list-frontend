@@ -48,6 +48,8 @@
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
     "@types/axios": "^0.14.0",
+    "@types/styled-components": "^5.1.9",
+    "@types/styled-system": "^5.1.11",
     "eslint": "^7.23.0",
     "husky": "^6.0.0",
     "prettier": "^2.2.1",
