@@ -4,7 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import { Button, Column, Input, Title, Text } from 'components'
-import { useUserContext } from 'contexts'
+import { useAuth } from 'hooks'
+
+type LoginProps = {
+  email: string
+  password: string
+}
 
 const schema = yup.object().shape({
   email: yup.string().email('Informe um e-mail válido').required('Por favor, preencha seu e-mail').nullable(),
@@ -12,15 +17,16 @@ const schema = yup.object().shape({
 })
 
 export const LoginPage: React.FC = () => {
-  const { errors, register, handleSubmit } = useForm({ resolver: yupResolver(schema) })
-  const { setUser } = useUserContext()
+  const { errors, register, handleSubmit } = useForm<LoginProps>({ resolver: yupResolver(schema) })
+  const { login } = useAuth()
 
   const onSubmit = useCallback(
-    (value) => {
-      console.log(value)
-      setUser(value)
+    async (value: LoginProps) => {
+      const { email, password } = value
+
+      await login(email, password)
     },
-    [setUser]
+    [login]
   )
 
   return (
