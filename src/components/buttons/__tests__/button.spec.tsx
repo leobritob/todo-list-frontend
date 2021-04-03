@@ -43,7 +43,7 @@ describe('<Button />', () => {
     })
 
     expect(pretty(container.innerHTML)).toMatchInlineSnapshot(
-      `"<button data-testid=\\"button\\" class=\\"sc-bdfBwQ lDFgM\\">Ok</button>"`
+      `"<button data-testid=\\"button\\" class=\\"sc-bdvvaa eksBrQ\\">Ok</button>"`
     )
   })
 
