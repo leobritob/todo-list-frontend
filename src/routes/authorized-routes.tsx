@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 
-import { AdminHomePage } from 'pages/admin'
+import { HomePage } from 'pages'
 
-export const AdminRoutes: React.FC = () => {
+export const AuthorizedRoutes: React.FC = () => {
   return (
     <Fragment>
       <Route path="/home" exact>
-        <AdminHomePage />
+        <HomePage />
       </Route>
+
       <Redirect path="/" to="/home" />
     </Fragment>
   )

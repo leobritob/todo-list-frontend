@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUserContext } from 'contexts'
 
-export const AdminHomePage: React.FC = () => {
+export const HomePage: React.FC = () => {
   const { user } = useUserContext()
 
   return (
