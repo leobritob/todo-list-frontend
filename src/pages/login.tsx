@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { Link } from 'react-router-dom'
 
 import { Button, Column, Input, Title, Text } from 'components'
 import { useAuth } from 'hooks'
@@ -42,6 +43,13 @@ export const LoginPage: React.FC = () => {
       <Button type="submit" width="100%" my="10px">
         Sign In
       </Button>
+
+      <Column width="100%" mt="10px">
+        <Text>Don't have an account?</Text>
+        <Link to="/register">
+          <Text>Create now</Text>
+        </Link>
+      </Column>
     </Column>
   )
 }

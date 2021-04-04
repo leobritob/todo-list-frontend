@@ -41,7 +41,7 @@ export const Card: React.FC<CardProps> = ({
     async (value) => {
       if (onItemAdd) {
         onItemAdd(value)
-        setValue('name', '')
+        setValue('description', '')
       }
     },
     [onItemAdd, setValue]

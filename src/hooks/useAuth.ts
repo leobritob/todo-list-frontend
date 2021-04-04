@@ -3,7 +3,8 @@ import { toast } from 'react-toastify'
 
 import { useAuthContext, useUserContext } from 'contexts'
 import { AuthService } from 'services'
-import { StorageHelper } from '../helpers'
+import { StorageHelper } from 'helpers'
+import { IStoreUser } from 'interfaces'
 
 export const useAuth = () => {
   const { setUser } = useUserContext()
@@ -30,6 +31,21 @@ export const useAuth = () => {
     [setToken, setUser]
   )
 
+  const registerNewUser = useCallback(async (data: IStoreUser) => {
+    setIsLoading(true)
+
+    try {
+      const res = await AuthService.registerNewUser(data)
+      if (res.status !== 201) console.error('Register failed')
+
+      toast.success('Your account was created with success!')
+    } catch (e) {
+      toast.error('Login failed, please try again!')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
   const logout = useCallback(() => {
     setUser(undefined)
     setToken(undefined)
@@ -41,5 +57,6 @@ export const useAuth = () => {
     isLoading,
     login,
     logout,
+    registerNewUser,
   }
 }

@@ -8,3 +8,5 @@ export interface IUser {
   updatedAt: Date
   deletedAt?: any
 }
+
+export type IStoreUser = Pick<IUser, 'firstName' | 'lastName' | 'email' | 'password'>
