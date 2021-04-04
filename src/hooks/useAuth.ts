@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 
 import { useAuthContext, useUserContext } from 'contexts'
 import { AuthService } from 'services'
+import { StorageHelper } from '../helpers'
 
 export const useAuth = () => {
   const { setUser } = useUserContext()
@@ -29,8 +30,16 @@ export const useAuth = () => {
     [setToken, setUser]
   )
 
+  const logout = useCallback(() => {
+    setUser(undefined)
+    setToken(undefined)
+    StorageHelper.clear()
+    console.log('fim')
+  }, [setToken, setUser])
+
   return {
     isLoading,
     login,
+    logout,
   }
 }

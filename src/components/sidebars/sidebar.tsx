@@ -2,18 +2,16 @@ import React, { useCallback } from 'react'
 import { useHistory } from 'react-router'
 
 import { Column, Row, Text, Nav } from 'components'
-import { StorageHelper } from 'helpers'
-import { useUserContext } from 'contexts'
+import { useAuth } from 'hooks'
 
 export const Sidebar: React.FC = () => {
   const history = useHistory()
-  const { setUser } = useUserContext()
+  const { logout } = useAuth()
 
   const handleExit = useCallback(() => {
-    StorageHelper.removeItem('user')
+    logout()
     history.push('/')
-    setUser(undefined)
-  }, [history, setUser])
+  }, [history, logout])
 
   return (
     <Column

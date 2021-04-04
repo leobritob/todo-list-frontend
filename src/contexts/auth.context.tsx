@@ -6,12 +6,12 @@ const KEY = StorageConstant.TOKEN
 
 type AuthContextProps = {
   token: string | undefined
-  setToken: (token: string) => void
+  setToken: (token: string | undefined) => void
 }
 
 const defaultValue = {
   token: StorageHelper.getItem(KEY) || {},
-  setToken: (token: string) => null,
+  setToken: (token: string | undefined) => null,
 }
 
 const Context = createContext<AuthContextProps>(defaultValue)
