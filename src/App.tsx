@@ -26,7 +26,7 @@ export const App: React.FC = () => {
     <AppContext>
       <ThemeProvider theme={theme}>
         <GlobalStyles theme={theme} />
-        <ToastContainer />
+        <ToastContainer autoClose={1500} />
         <Router />
       </ThemeProvider>
     </AppContext>

@@ -20,6 +20,8 @@ import {
   BackgroundProps,
   space,
   SpaceProps,
+  shadow,
+  ShadowProps,
 } from 'styled-system'
 
 export type ColumProps = LayoutProps &
@@ -31,7 +33,8 @@ export type ColumProps = LayoutProps &
   BorderProps &
   PositionProps &
   BackgroundProps &
-  SpaceProps
+  SpaceProps &
+  ShadowProps
 
 export const Column = styled.div.attrs({ 'data-testid': 'column' })<ColumProps>`
   display: flex;
@@ -48,4 +51,5 @@ export const Column = styled.div.attrs({ 'data-testid': 'column' })<ColumProps>`
   ${position}
   ${background}
   ${space}
+  ${shadow}
 `
