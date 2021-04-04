@@ -57,6 +57,7 @@
     "@commitlint/config-conventional": "^12.1.1",
     "@types/axios": "^0.14.0",
     "@types/color": "^3.0.1",
+    "@types/pretty": "^2.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-test-renderer": "^17.0.1",
     "@types/styled-components": "^5.1.9",
