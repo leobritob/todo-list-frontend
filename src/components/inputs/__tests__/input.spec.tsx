@@ -48,7 +48,7 @@ describe('<Input />', () => {
     })
 
     expect(pretty(container.innerHTML)).toMatchInlineSnapshot(
-      `"<input id=\\"firstName\\" name=\\"firstName\\" placeholder=\\"First name\\" data-testid=\\"input\\" class=\\"sc-jRQAMF bRBxYX\\">"`
+      `"<input id=\\"firstName\\" name=\\"firstName\\" placeholder=\\"First name\\" data-testid=\\"input\\" class=\\"sc-gKckTs bKFuMX\\">"`
     )
   })
 

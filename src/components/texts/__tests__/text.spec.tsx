@@ -48,7 +48,7 @@ describe('<Text />', () => {
     })
 
     expect(pretty(container.innerHTML)).toMatchInlineSnapshot(
-      `"<p data-testid=\\"text\\" class=\\"sc-eCImvq hJYfFh\\">Ok</p>"`
+      `"<p data-testid=\\"text\\" class=\\"sc-jRQAMF kBQoQD\\">Ok</p>"`
     )
   })
 })

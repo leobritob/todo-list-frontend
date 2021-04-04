@@ -22,6 +22,6 @@ describe('<NavList />', () => {
       render(<NavList />, container)
     })
 
-    expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`"<ul class=\\"sc-iCfLBT hsCeMl\\"></ul>"`)
+    expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`"<ul class=\\"sc-furvIG hQDONG\\"></ul>"`)
   })
 })

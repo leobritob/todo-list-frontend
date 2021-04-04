@@ -23,6 +23,6 @@ describe('<NavItem />', () => {
       render(<NavItem theme={theme} />, container)
     })
 
-    expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`"<li class=\\"sc-gKckTs fvWWCn\\"></li>"`)
+    expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`"<li class=\\"sc-iCfLBT fNmUDK\\"></li>"`)
   })
 })

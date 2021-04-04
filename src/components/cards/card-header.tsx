@@ -9,8 +9,8 @@ import { Text, CustomRow, Column, Row, Button, Input } from 'components'
 type CardHeaderProps = {
   id: string
   name: string
-  onUpdate: (id: string, name: string) => void
-  onDelete: (id: string) => void
+  onUpdate?: (id: string, name: string) => void
+  onDelete?: (id: string) => void
 }
 
 const schema = yup.object().shape({
@@ -23,13 +23,13 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ id, name, onUpdate, onDe
   const { errors, register, handleSubmit, setValue } = useForm({ resolver: yupResolver(schema) })
 
   const onSubmit = async (value: { name: string }) => {
-    onUpdate(id, value.name)
+    if (onUpdate) onUpdate(id, value.name)
     setIsUpdate(false)
     setValue('name', value.name)
   }
 
   const handleDelete = (id: string) => {
-    onDelete(id)
+    if (onDelete) onDelete(id)
     setIsUpdate(false)
   }
 
@@ -51,8 +51,12 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ id, name, onUpdate, onDe
         )}
       </Column>
 
-      {!!onUpdate && <BsPencil style={{ cursor: 'pointer' }} color="red" onClick={() => setIsUpdate(!isUpdate)} />}
-      {!!onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => handleDelete(id)} />}
+      {!!onUpdate && (
+        <BsPencil data-testid="edit" style={{ cursor: 'pointer' }} color="red" onClick={() => setIsUpdate(!isUpdate)} />
+      )}
+      {!!onDelete && (
+        <BsTrash data-testid="delete" style={{ cursor: 'pointer' }} color="red" onClick={() => handleDelete(id)} />
+      )}
     </CustomRow>
   )
 }
