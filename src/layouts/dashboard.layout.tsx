@@ -8,8 +8,7 @@ export const DashboardLayout: React.FC = ({ children }) => {
       <Row width="100vw">
         <Sidebar />
         <Column
-          flex={1}
-          width="100%"
+          width="calc(100vw - 300px)"
           height="100vh"
           alignItems="flex-start"
           justifyContent="flex-start"

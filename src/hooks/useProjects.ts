@@ -38,6 +38,21 @@ export const useProjects = () => {
     }
   }, [])
 
+  const updateProjectById = useCallback(async (id: string, data: Partial<IProject>) => {
+    setIsLoading(true)
+
+    try {
+      const res = await ProjectsService.updateById(id, data)
+      if (res.status !== 200) return
+
+      toast.success('Project was updated successfully!')
+    } catch (e) {
+      toast.error('Something wrong!')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
   const deleteProjectById = useCallback(async (id: string) => {
     setIsLoading(true)
 
@@ -58,6 +73,7 @@ export const useProjects = () => {
     projects,
     getAllProjects,
     saveNewProject,
+    updateProjectById,
     deleteProjectById,
   }
 }

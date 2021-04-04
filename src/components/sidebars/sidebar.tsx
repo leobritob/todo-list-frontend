@@ -25,8 +25,6 @@ export const Sidebar: React.FC = () => {
       left="0"
       alignItems="flex-start"
       justifyContent="flex-start"
-      borderTopRightRadius="30px"
-      borderBottomRightRadius="30px"
     >
       <Column width="100%" padding="30px 0 5px 0" justifyContent="space-between">
         <Text fontSize="24px" color="#fff" padding="10px 0">

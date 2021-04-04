@@ -1,24 +1,55 @@
-import React, { Fragment, useMemo } from 'react'
-import { BsTrash } from 'react-icons/bs'
+import React, { Fragment, useCallback, useMemo } from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { useForm } from 'react-hook-form'
 
-import { Column, Row, Text, CardItem } from 'components'
+import { Column, Row, Text, CardItem, Input, Button } from 'components'
 import { CardItemProps } from './card-item'
+import { CardHeader } from './card-header'
 
 export type CardProps = {
   id: string
   name: string
-  cards: Omit<CardItemProps, 'onStatusChange'>[]
-  onStatusChange: (data: Omit<CardItemProps, 'onStatusChange'>) => void
+  cards: CardItemProps[]
+  onStatusChange: (data: CardItemProps) => void
+  onUpdate: (id: string, name: string) => void
   onDelete: (id: string) => void
+  onItemAdd: (data: CardItemProps) => void
+  onItemDelete: (id: string) => void
 }
 
-export const Card: React.FC<CardProps> = ({ id, name, cards, onDelete, onStatusChange }) => {
+const schema = yup.object().shape({
+  description: yup.string().nullable().required(),
+})
+
+export const Card: React.FC<CardProps> = ({
+  id,
+  name,
+  cards,
+  onUpdate,
+  onDelete,
+  onStatusChange,
+  onItemAdd,
+  onItemDelete,
+}) => {
   const cardsToDo = useMemo(() => cards.filter((card) => !card.done), [cards])
   const cardsDone = useMemo(() => cards.filter((card) => card.done), [cards])
 
+  const { errors, setValue, register, handleSubmit } = useForm({ resolver: yupResolver(schema) })
+
+  const onSubmit = useCallback(
+    async (value) => {
+      if (onItemAdd) {
+        onItemAdd(value)
+        setValue('name', '')
+      }
+    },
+    [onItemAdd, setValue]
+  )
+
   return (
     <Column
-      width="350px"
+      minWidth="350px"
       p="10px"
       m="10px"
       bg="#fff"
@@ -26,14 +57,17 @@ export const Card: React.FC<CardProps> = ({ id, name, cards, onDelete, onStatusC
       boxShadow="0 1px 5px 0px rgba(0,0,0,0.1)"
       alignItems="flex-start"
     >
-      <Row width="100%" justifyContent="flex-start">
-        <Column flex={1}>
-          <Text fontWeight="bold" fontSize="18px" m="10px 0" color="primary">
-            {name}
-          </Text>
-        </Column>
-        {onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => onDelete(id)} />}
-      </Row>
+      <CardHeader id={id} name={name} onUpdate={onUpdate} onDelete={onDelete} />
+
+      <Column as="form" width="100%" p="10px" onSubmit={handleSubmit(onSubmit)} alignItems="flex-start">
+        <Row width="100%">
+          <Input ref={register} id="description" name="description" placeholder="Description" autoComplete="off" />
+          <Button type="submit" ml="5px">
+            Add
+          </Button>
+        </Row>
+        {errors?.description?.message && <Text color="danger">{errors?.description?.message}</Text>}
+      </Column>
 
       {cardsToDo.length > 0 && (
         <Fragment>
@@ -41,7 +75,7 @@ export const Card: React.FC<CardProps> = ({ id, name, cards, onDelete, onStatusC
             TO DO
           </Text>
           {cardsToDo.map((card, index) => (
-            <CardItem key={index} {...card} onStatusChange={onStatusChange} />
+            <CardItem key={index} {...card} onStatusChange={onStatusChange} onDelete={onItemDelete} />
           ))}
         </Fragment>
       )}
@@ -52,7 +86,7 @@ export const Card: React.FC<CardProps> = ({ id, name, cards, onDelete, onStatusC
             DONE
           </Text>
           {cardsDone.map((card, index) => (
-            <CardItem key={index} {...card} onStatusChange={onStatusChange} />
+            <CardItem key={index} {...card} onStatusChange={onStatusChange} onDelete={onItemDelete} />
           ))}
         </Fragment>
       )}

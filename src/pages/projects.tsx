@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { Fragment, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -12,13 +12,13 @@ const schema = yup.object().shape({
 })
 
 export const ProjectsPage: React.FC = () => {
-  const { isLoading, projects, getAllProjects, saveNewProject, deleteProjectById } = useProjects()
-  const { updateTaskById } = useTasks()
+  const { projects, getAllProjects, saveNewProject, updateProjectById, deleteProjectById } = useProjects()
+  const { updateTaskById, saveNewTask, deleteTaskById } = useTasks()
 
   const { errors, setValue, register, handleSubmit } = useForm({ resolver: yupResolver(schema) })
 
   const handleStatusChange = useCallback(
-    async (task: Omit<CardItemProps, 'onStatusChange'>) => {
+    async (task: CardItemProps) => {
       await updateTaskById(task.id, { done: task.done ? 0 : 1 })
       await getAllProjects()
     },
@@ -31,6 +31,31 @@ export const ProjectsPage: React.FC = () => {
       await getAllProjects()
     },
     [deleteProjectById, getAllProjects]
+  )
+
+  const handleUpdate = useCallback(
+    async (id: string, name: string) => {
+      await updateProjectById(id, { name })
+      await getAllProjects()
+    },
+    [getAllProjects, updateProjectById]
+  )
+
+  const handleAddTask = useCallback(
+    async (id, value) => {
+      await saveNewTask({ ...value, projectId: id })
+      await getAllProjects()
+      setValue('name', '')
+    },
+    [getAllProjects, saveNewTask, setValue]
+  )
+
+  const handleDeleteItem = useCallback(
+    async (id: string) => {
+      await deleteTaskById(id)
+      await getAllProjects()
+    },
+    [deleteTaskById, getAllProjects]
   )
 
   const onSubmit = useCallback(
@@ -47,13 +72,14 @@ export const ProjectsPage: React.FC = () => {
   }, [getAllProjects])
 
   return (
-    <div>
+    <Fragment>
       <Title>Projects</Title>
 
       <Column
         as="form"
         width="350px"
         p="10px"
+        mb="20px"
         boxShadow="0 1px 5px rgba(0,0,0,0.1)"
         onSubmit={handleSubmit(onSubmit)}
         alignItems="flex-start"
@@ -67,22 +93,21 @@ export const ProjectsPage: React.FC = () => {
         {errors?.name?.message && <Text color="danger">{errors?.name?.message}</Text>}
       </Column>
 
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <Row width="100%" flexWrap="wrap" justifyContent="flex-start" alignItems="flex-start">
-          {projects.map((project, index) => (
-            <Card
-              key={index}
-              id={project.id}
-              name={project.name}
-              cards={project.tasks}
-              onStatusChange={handleStatusChange}
-              onDelete={handleDelete}
-            />
-          ))}
-        </Row>
-      )}
-    </div>
+      <Row width="100%" height="100%" p="10px 0" overflowX="auto" justifyContent="flex-start" alignItems="flex-start">
+        {projects.map((project, index) => (
+          <Card
+            key={index}
+            id={project.id}
+            name={project.name}
+            cards={project.tasks}
+            onStatusChange={handleStatusChange}
+            onDelete={handleDelete}
+            onItemAdd={(task) => handleAddTask(project.id, task)}
+            onItemDelete={handleDeleteItem}
+            onUpdate={handleUpdate}
+          />
+        ))}
+      </Row>
+    </Fragment>
   )
 }

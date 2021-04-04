@@ -1,18 +1,22 @@
 import React from 'react'
+import { BsTrash } from 'react-icons/bs'
 
-import { Column, Row, Text } from 'components'
+import { Row, CustomRow, Text } from 'components'
 
-export type CardItemProps = {
+export type CardItemComponentProps = {
   id: string
   description: string
   done: number
-  onStatusChange: (data: Omit<CardItemProps, 'onStatusChange'>) => void
+  onStatusChange: (data: Pick<CardItemProps, 'id' | 'description' | 'done'>) => void
+  onDelete: (id: string) => void
 }
 
-export const CardItem: React.FC<CardItemProps> = ({ id, description, done, onStatusChange }) => {
+export type CardItemProps = Pick<CardItemComponentProps, 'id' | 'description' | 'done'>
+
+export const CardItem: React.FC<CardItemComponentProps> = ({ id, description, done, onStatusChange, onDelete }) => {
   return (
-    <Column>
-      <Row width="100%" p="5px 0" justifyContent="flex-start">
+    <CustomRow width="100%" p="5px 0" justifyContent="flex-start" alignItems="flex-start">
+      <Row flex={1} justifyContent="flex-start">
         <input
           type="checkbox"
           name="done"
@@ -23,6 +27,7 @@ export const CardItem: React.FC<CardItemProps> = ({ id, description, done, onSta
         />
         <Text p="0 5px">{description}</Text>
       </Row>
-    </Column>
+      {onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => onDelete(id)} />}
+    </CustomRow>
   )
 }
