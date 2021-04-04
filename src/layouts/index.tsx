@@ -1,1 +1,1 @@
-export * from './login-layout'
+export * from './login.layout'
