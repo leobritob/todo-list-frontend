@@ -1,15 +1,18 @@
 import React, { Fragment, useMemo } from 'react'
+import { BsTrash } from 'react-icons/bs'
 
-import { Column, Text, CardItem } from 'components'
+import { Column, Row, Text, CardItem } from 'components'
 import { CardItemProps } from './card-item'
 
 export type CardProps = {
+  id: string
   name: string
-  onStatusChange: (data: Omit<CardItemProps, 'onStatusChange'>) => void
   cards: Omit<CardItemProps, 'onStatusChange'>[]
+  onStatusChange: (data: Omit<CardItemProps, 'onStatusChange'>) => void
+  onDelete: (id: string) => void
 }
 
-export const Card: React.FC<CardProps> = ({ name, onStatusChange, cards }) => {
+export const Card: React.FC<CardProps> = ({ id, name, cards, onDelete, onStatusChange }) => {
   const cardsToDo = useMemo(() => cards.filter((card) => !card.done), [cards])
   const cardsDone = useMemo(() => cards.filter((card) => card.done), [cards])
 
@@ -23,9 +26,14 @@ export const Card: React.FC<CardProps> = ({ name, onStatusChange, cards }) => {
       boxShadow="0 1px 5px 0px rgba(0,0,0,0.1)"
       alignItems="flex-start"
     >
-      <Text fontWeight="bold" fontSize="18px" m="10px 0" color="primary">
-        {name}
-      </Text>
+      <Row width="100%" justifyContent="flex-start">
+        <Column flex={1}>
+          <Text fontWeight="bold" fontSize="18px" m="10px 0" color="primary">
+            {name}
+          </Text>
+        </Column>
+        {onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => onDelete(id)} />}
+      </Row>
 
       {cardsToDo.length > 0 && (
         <Fragment>
