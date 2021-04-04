@@ -1,5 +1,7 @@
 import React from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { AppContext } from 'contexts'
 import { Router } from './routes'
@@ -24,6 +26,7 @@ export const App: React.FC = () => {
     <AppContext>
       <ThemeProvider theme={theme}>
         <GlobalStyles theme={theme} />
+        <ToastContainer />
         <Router />
       </ThemeProvider>
     </AppContext>

@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import { useAuthContext, useUserContext } from 'contexts'
 import { AuthService } from 'services'
 
@@ -12,13 +14,17 @@ export const useAuth = () => {
     async (email: string, password: string) => {
       setIsLoading(true)
 
-      const res = await AuthService.login(email, password)
-      if (res.status !== 200) console.error('Login failed')
+      try {
+        const res = await AuthService.login(email, password)
+        if (res.status !== 200) console.error('Login failed')
 
-      setToken(res.data.token)
-      setUser(res.data.user)
-
-      setIsLoading(false)
+        setToken(res.data.token)
+        setUser(res.data.user)
+      } catch (e) {
+        toast.error('Login failed, please try again!')
+      } finally {
+        setIsLoading(false)
+      }
     },
     [setToken, setUser]
   )
