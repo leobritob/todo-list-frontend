@@ -8,12 +8,12 @@ const KEY = StorageConstant.USER
 
 type UserContextProps = {
   user: IUser | undefined
-  setUser: (user: IUser) => void
+  setUser: (user: IUser | undefined) => void
 }
 
 const defaultValue = {
   user: StorageHelper.getItem(KEY) || {},
-  setUser: (user: IUser) => null,
+  setUser: (user: IUser | undefined) => null,
 }
 
 const Context = createContext<UserContextProps>(defaultValue)

@@ -1,16 +1,19 @@
 import React, { Fragment } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 
-import { HomePage } from 'pages'
+import { ProjectsPage } from 'pages'
+import { DashboardLayout } from 'layouts'
 
 export const AuthorizedRoutes: React.FC = () => {
   return (
     <Fragment>
-      <Route path="/home" exact>
-        <HomePage />
-      </Route>
+      <DashboardLayout>
+        <Route path="/projects" exact>
+          <ProjectsPage />
+        </Route>
+      </DashboardLayout>
 
-      <Redirect path="/" to="/home" />
+      <Redirect path="/" to="/projects" />
     </Fragment>
   )
 }

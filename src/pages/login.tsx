@@ -12,8 +12,8 @@ type LoginProps = {
 }
 
 const schema = yup.object().shape({
-  email: yup.string().email('Informe um e-mail válido').required('Por favor, preencha seu e-mail').nullable(),
-  password: yup.string().required('Por favor, preencha sua senha').nullable(),
+  email: yup.string().email('Put a valid email').required('Please, enter your email').nullable(),
+  password: yup.string().required('Please, enter your password').nullable(),
 })
 
 export const LoginPage: React.FC = () => {
@@ -31,16 +31,16 @@ export const LoginPage: React.FC = () => {
 
   return (
     <Column as="form" width="100%" alignItems="flex-start" onSubmit={handleSubmit(onSubmit)}>
-      <Title>Painel de Autenticação</Title>
+      <Title>Sign In</Title>
 
-      <Input type="email" id="email" name="email" placeholder="E-mail" ref={register} />
+      <Input type="email" id="email" name="email" placeholder="Email" ref={register} />
       {errors?.email?.message && <Text color="danger">{errors?.email?.message}</Text>}
 
-      <Input type="password" id="password" name="password" placeholder="Senha" mt="10px" ref={register} />
+      <Input type="password" id="password" name="password" placeholder="Password" mt="10px" ref={register} />
       {errors?.password?.message && <Text color="danger">{errors?.password?.message}</Text>}
 
       <Button type="submit" width="100%" my="10px">
-        Conectar
+        Sign In
       </Button>
     </Column>
   )

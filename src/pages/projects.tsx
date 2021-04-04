@@ -1,12 +1,14 @@
 import React from 'react'
 import { useUserContext } from 'contexts'
 
-export const HomePage: React.FC = () => {
+import { Title } from 'components'
+
+export const ProjectsPage: React.FC = () => {
   const { user } = useUserContext()
 
   return (
     <div>
-      <h1>Bem-vindo(a), {user?.email}!</h1>
+      <Title>Projects</Title>
     </div>
   )
 }
