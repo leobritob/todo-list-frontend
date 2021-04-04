@@ -1,5 +1,7 @@
 import React from 'react'
 import { BsTrash } from 'react-icons/bs'
+import { format } from 'date-fns'
+import ReactTooltip from 'react-tooltip'
 
 import { Row, CustomRow, Text } from 'components'
 
@@ -7,13 +9,21 @@ export type CardItemComponentProps = {
   id: string
   description: string
   done: number
-  onStatusChange: (data: Pick<CardItemProps, 'id' | 'description' | 'done'>) => void
+  doneDate: string
+  onStatusChange: (data: CardItemProps) => void
   onDelete: (id: string) => void
 }
 
-export type CardItemProps = Pick<CardItemComponentProps, 'id' | 'description' | 'done'>
+export type CardItemProps = Pick<CardItemComponentProps, 'id' | 'description' | 'done' | 'doneDate'>
 
-export const CardItem: React.FC<CardItemComponentProps> = ({ id, description, done, onStatusChange, onDelete }) => {
+export const CardItem: React.FC<CardItemComponentProps> = ({
+  id,
+  description,
+  done,
+  doneDate,
+  onStatusChange,
+  onDelete,
+}) => {
   return (
     <CustomRow width="100%" p="5px 0" justifyContent="flex-start" alignItems="flex-start">
       <Row flex={1} justifyContent="flex-start">
@@ -23,11 +33,14 @@ export const CardItem: React.FC<CardItemComponentProps> = ({ id, description, do
           id="done"
           title="done"
           checked={done === 1}
-          onClick={() => onStatusChange({ id, description, done })}
+          onClick={done ? () => {} : () => onStatusChange({ id, description, done, doneDate })}
         />
-        <Text p="0 5px">{description}</Text>
+        <ReactTooltip />
+        <Text p="0 5px" data-tip={done ? `Finished at ${format(new Date(doneDate), 'M/d/Y H:m:s')}` : null}>
+          {description}
+        </Text>
       </Row>
-      {onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => onDelete(id)} />}
+      {!done && onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => onDelete(id)} />}
     </CustomRow>
   )
 }

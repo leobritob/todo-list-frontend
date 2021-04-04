@@ -10,5 +10,5 @@ export interface IProject {
 }
 
 export type IGetAllProjects = Pick<IProject, 'id' | 'name'> & {
-  tasks: Pick<ITask, 'id' | 'description' | 'dueDate' | 'done'>[]
+  tasks: Pick<ITask, 'id' | 'description' | 'doneDate' | 'done'>[]
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { BsPencil, BsTrash } from 'react-icons/bs'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -20,14 +20,18 @@ const schema = yup.object().shape({
 export const CardHeader: React.FC<CardHeaderProps> = ({ id, name, onUpdate, onDelete }) => {
   const [isUpdate, setIsUpdate] = useState(false)
 
-  const { errors, register, handleSubmit } = useForm({ resolver: yupResolver(schema), defaultValues: { name } })
+  const { errors, register, handleSubmit, setValue } = useForm({ resolver: yupResolver(schema) })
 
-  const onSubmit = useCallback(
-    async (value) => {
-      await onUpdate(id, value.name)
-    },
-    [id, onUpdate]
-  )
+  const onSubmit = async (value: { name: string }) => {
+    onUpdate(id, value.name)
+    setIsUpdate(false)
+    setValue('name', value.name)
+  }
+
+  const handleDelete = (id: string) => {
+    onDelete(id)
+    setIsUpdate(false)
+  }
 
   return (
     <CustomRow width="100%" justifyContent="flex-start">
@@ -35,7 +39,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ id, name, onUpdate, onDe
         {isUpdate ? (
           <Column as="form" onSubmit={handleSubmit(onSubmit)}>
             <Row>
-              <Input ref={register} name="name" id="name" placeholder="Name" />
+              <Input ref={register} name="name" id="name" placeholder="Name" defaultValue={name} />
               <Button type="submit">Save</Button>
             </Row>
             {errors.name?.message && <Text>{errors.name.message}</Text>}
@@ -48,7 +52,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ id, name, onUpdate, onDe
       </Column>
 
       {!!onUpdate && <BsPencil style={{ cursor: 'pointer' }} color="red" onClick={() => setIsUpdate(!isUpdate)} />}
-      {!!onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => onDelete(id)} />}
+      {!!onDelete && <BsTrash style={{ cursor: 'pointer' }} color="red" onClick={() => handleDelete(id)} />}
     </CustomRow>
   )
 }

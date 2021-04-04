@@ -3,6 +3,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+
 import { AppContext } from 'contexts'
 import { Router } from './routes'
 import { theme, ThemeType } from 'styles'
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyles theme={theme} />
         <ToastContainer autoClose={1500} />
+        
         <Router />
       </ThemeProvider>
     </AppContext>
