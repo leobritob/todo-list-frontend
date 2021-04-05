@@ -1,4 +1,4 @@
-# TODO List - Frontned
+# TODO List - Frontend
 
 ## Description
 
