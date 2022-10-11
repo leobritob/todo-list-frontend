@@ -6,11 +6,8 @@ This is a simple ToDo app made with React, Typescript, Styled-Components, Styled
 
 
 ## Preview
-<p align="center">
- <img src="./preview.png" width="800" alt="TODO List Project" />
- <img src="./preview-1.png" width="800" alt="TODO List Project" />
-</p>
-
+![TODOAPP LOGIN](./preview.png)
+![TODOAPP DASHBOARD](./preview-1.png)
 ## Installation
 
 ```bash
@@ -22,7 +19,6 @@ $ npm install
 ```bash
 # development
 $ npm run start
-
 ```
 
 ## Test
